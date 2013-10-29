@@ -1,0 +1,72 @@
+﻿@model ExamMvc.Web.Models.TicketCreateModel
+
+@{
+    ViewBag.Title = "Add Ticket";
+    IEnumerable<SelectListItem> enumPriority = (IEnumerable<SelectListItem>)ViewBag.Priority;
+}
+<h1>Ticketing System </h1>
+<h2>Add Ticket</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+        <legend></legend>
+        <div class="control-group">
+            @Html.LabelFor(model => model.CategoryId, "Category", new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("CategoryId", String.Empty)
+                @Html.ValidationMessageFor(model => model.CategoryId, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Priority, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("PriorityDd", enumPriority)
+              
+
+                @Html.ValidationMessageFor(model => model.Priority, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.ScreenshotUrl, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.ScreenshotUrl)
+                @Html.ValidationMessageFor(model => model.ScreenshotUrl, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Add ticket" class="btn" />
+        </div>
+    </fieldset>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

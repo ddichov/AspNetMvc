@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ExamMvc.Web.Models.TicketListModel>
+
+@{
+    ViewBag.Title = "Tickets list";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="row-fluid">
+    @using (Html.BeginForm("Search", "TicketsLoggedUser", FormMethod.Post ))
+    {
+        <div>
+            Search by Category
+        </div>
+        @(Html.Kendo()
+        .DropDownList()
+        .Name("Catsearch")
+        .DataTextField("Name")
+        .DataValueField("Id")
+        .OptionLabel(" ")
+        .Events(e => e.Change("change"))
+        .DataSource(data =>
+        {
+            data.Read(read => read.Action("GetTicketsByCategoryData", "TicketsLoggedUser"));
+            data.ServerFiltering(true);
+        }))
+        <br />
+        @Html.TextBox("catId")
+        <br />
+        <div>
+            <input type="submit" value="Search" class="btn" />
+        </div>
+    }
+</div>
+
+<div style="border: 1px solid gray;">
+    <div class="row-fluid">
+        <div class="span3">
+            <h3>Title</h3>
+        </div>
+        <div class="span3">
+            <h3>Category</h3>
+        </div>
+        <div class="span3">
+            <h3>Author</h3>
+        </div>
+        <div class="span3">
+            <h3>Priority</h3>
+        </div>
+    </div>
+    @(Html.Kendo()
+        .ListView<ExamMvc.Web.Models.TicketListModel>()
+        .Name("tickets")
+        .TagName("div")
+        .ClientTemplateId("ticket-template")
+        .Pageable()
+        .DataSource(data =>
+        {
+            data.Read("GetTickets", "TicketsLoggedUser");
+            data.ServerOperation(true);
+            data.PageSize(5);
+        }))
+</div>
+
+@section scripts{
+    <script id="ticket-template" type="text/x-kendo-template">
+        <div class="row-fluid">
+            <div class="span3">
+                <p> <a href="/Tickets/Details/#: Id #" class="btn"> #: Title #</a> </p>
+            </div>
+            <div class="span3">
+                <p>#: CategoryName # </p>
+            </div>
+            <div class="span3">
+                <p>#: AuthorName # </p>
+            </div>
+            <div class="span3">
+                <p>#: PriorityName # </p>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        $("#catId").hide();
+
+        function change() {
+            var value = $("#Catsearch").val();
+            $("#catId").val(value);
+        };
+    </script>
+}

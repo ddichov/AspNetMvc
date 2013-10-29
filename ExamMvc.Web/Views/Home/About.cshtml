@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Ticketing System in ASP.NET MVC";
+}
+<hgroup>
+    <h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
+</hgroup>
+<div class="row-fluid">
+    <div class="span12">
+
+        <p>You are assigned to design and implement a Ticketing System where visitors (without authentication)
+         should be able to view most commented tickets, as well as to register and login in the system.
+         Registered users (after login) should be able to view, comment, search and send tickets (e.g. bug reports).
+         Administrators should have full CRUD operations on categories and comments.</p>
+        <p>
+            The system should be implemented as a server-side web application in ASP.NET MVC 5.
+        </p>
+        <h4>Problem 1.	Ticketing System Data Layer</h4>
+        <p> Use Entity Framework as ORM engine and MS SQL Server Local DB as database storage engine</p>
+        <p> Repository pattern and Unit of Work – the data layer should be implemented 
+        with repository pattern and unit of work.</p>
+        <p> Design a simple data layer to hold users, categories, tickets, and comments. </p>
+        <p> Each user has username, password and points. The password should be stored in the DB encrypted 
+        (not as clear text).</p>
+        <p> The user’s points are by default 10 and for each reported ticket users receive 1 points.</p>
+        <p> Use the ASP.NET Identity system to keep the users and their encrypted passwords </p>
+        <p> Use the ASP.NET Identity system to keep the users and their encrypted passwords </p>
+        <p> Categories have name (mandatory) and hold a set of tickets.</p>
+        <p> Each ticket has mandatory author (user), category, title, priority (low, medium (default value), high) 
+        and optionally screenshot URL and description (string, no html allowed). 
+        Tickets also have a set of comments.</p>
+        <p> Each comment has user, ticket and content.</p>
+        <p> Fill some sample data in the DB to simplify any further testing.</p>
+        <p> Your project should run after "copy/paste" deployment, without changing connection strings or other settings. 
+        You may use code first, model first or database first approach to access your data from Entity Framework.</p>
+       
+        <h4>Problem 2.	Ticketing System ASP.NET MVC Application – Common Features</h4>
+        <p> Layout – design an ASP.NET MVC Layout page to reuse the common page elements 
+        like headers and footers and navigation in all other pages in the project.</p>
+        <p> In the navigation when user is not authorized add link only to the home page, register and login pages.
+        For registered users add link for adding a new ticket and to tickets list. 
+        For administrators add sub-menu for every administration available.
+        </p>
+        <p> Use Kendo UI Menu for the navigation.</p>
+        <p> Configure the ASP.NET Identity System to enable user management functionality (login / logout).</p>
+        <p> The username should be between 6 and 16 characters long.</p>
+        <p> Error handling – in case of error (e.g. DB connection lost, incorrect request, etc.), 
+        an appropriate error message should be displayed. You are free to decide how exactly.</p>
+        <p> User interface (UI) – the user interface should be the same as in the given images. 
+        Use bootstrap properly. The UI of the administration pages is not important.</p>
+
+        <h4>Problem 3.	Ticketing System ASP.NET MVC Application – Public Area </h4>
+        <p> Home page – at the application start page display the 6 most commented tickets. 
+            Display the title of the ticket, the name of the category, the name of the author and the number of comments. 
+            Show a link to the tickets details page.
+        </p>
+        <p> Cache the 6 most commented tickets for an hour ahead.</p>
+        <p> View ticket details – clicking on a ticket from the start page should display all ticket details 
+            (title, description, priority, author, screenshot image and category) on a separate page. 
+            Display all comments for the ticket (no paging is required). 
+            The optional fields should not be displayed if not available.
+        </p>
+        
+        <h4>Problem 4.	Ticketing System ASP.NET MVC Application – User Area </h4>
+        <p> Registered users should be able to add tickets. Write a form for adding a ticket.
+        Required fields: category, title and priority. The screenshot URL and description are optional.
+        Use MVC build-in client-side unobtrusive validation and server side validation.
+        </p>
+        <p> The author of the ticket should be the currently logged user. 
+        After adding the ticket, also add 1 point to the user’s points.</p>
+        <p> Create drop down lists for the category and the priority (Kendo UI DropDown is not required).</p>
+        <p> Ticket’s title should not contain the word “bug” in it. 
+        Validate it with custom validation attribute.</p>
+        
+        <p> List page – registered users (after login) should be able to see a list page with all the tickets. 
+            Display only title, category, author and priority.</p>
+        <p> Use Kendo UI ListView and custom template</p>
+        <p> Use server side paging (page size 5).</p>
+        <p> Commenting on tickets – Registered users can comment the tickets in their details page.</p>
+        <p> Commenting should be done with AJAX updating the information without refreshing the page</p>
+        <p> Search – at the List page a category filter drop down and “Filter button” should be displayed.
+            In the drop down list there should be an empty option. 
+            If the empty option is selected, the search should not filter results by category.
+        </p>
+        <p> Use KendoUI DropDown list for the category filter.</p>
+        
+        <h4>Problem 5.	Ticketing System ASP.NET MVC Application – Administration Area </h4>
+        <p> Create / edit / delete categories – successfully logged-in administrators should be able to 
+            create / edit / delete ticket’s categories.</p>
+        <p> When a category is deleted all its tickets and their comments are deleted as well. </p>
+        <p> Use Kendo Grid with server side paging, sorting and filtering for the categories administration.</p>
+        <p> Edit / delete comments – successfully logged administrators should be able to edit and delete comments.  
+            Use scaffolding.</p>
+        <p> Administrators should not be able to add comments. Only users should be able to add comments in the system.</p>
+        <p> When editing comments, the administrator should only be able to edit the content of the comment.</p>
+        <p> </p>
+        <p>to login as admin use </p>
+        <p> username: Administrator, pass: Administrator</p>
+
+    </div>
+</div>

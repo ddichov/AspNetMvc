@@ -1,0 +1,69 @@
+﻿@using ExamMvc.Web.Models
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+
+<div class="row-fluid">
+    <div class="span7">
+        @(Html.Kendo().Grid<ExamMvc.Web.Models.CategoryViewModel>().Name("GridCategories")
+        .Columns(col =>
+        {
+            col.Bound(c => c.Name).Width(250);
+            col.Bound(c => c.Id);
+            col.Command(com =>
+            {
+                com.Edit();
+                com.Destroy();
+            }).Title("Action").Width(150);
+        })
+        .DataSource(data =>
+        {
+            data.Ajax()
+                .Model(m => m.Id(c => c.Id))
+                .ServerOperation(true)
+                .PageSize(5)
+                .Create("Create", "Category")
+                .Read("GetCategories", "Category")
+                .Update("Update", "Category")
+                .Destroy("Delete", "Category")
+                .Events(ev =>
+                {
+                    ev.Error("onError");
+                    ev.RequestStart("requestStart");
+                });
+        })
+        .Editable(edit =>
+        {
+            edit.CreateAt(GridInsertRowPosition.Bottom);
+            edit.Enabled(true);
+            edit.Mode(GridEditMode.PopUp);
+        })
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .ToolBar(t =>
+        {
+            t.Create();
+        })
+        )
+    </div>
+</div>
+
+<div id="errMsg" class="text-warning span5"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        function onError(ev) {
+            $('#errMsg').text(ev.errorThrown).show();
+            setTimeout(function () { $('#errMsg').hide(1000); }, 3000);
+        }
+
+        function requestStart() {
+            $('#errMsg').hide();
+        }
+    </script>
+}
+
